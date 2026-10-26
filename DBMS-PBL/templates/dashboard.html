@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | TrafficSafe{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block content %}
+<div class="welcome"><div><span class="pill">OVERVIEW</span><h2>Good day, Administrator</h2><p>Here’s the current summary of your traffic safety records.</p></div><div class="welcome-mark">⌁</div></div>
+<div class="stats-grid">
+  <div class="stat-card"><div class="stat-top"><span>Total drivers</span><span class="stat-icon blue">♙</span></div><div class="stat-number">{{ stats.drivers }}</div><div class="stat-foot">Registered driver records</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Registered vehicles</span><span class="stat-icon purple">▣</span></div><div class="stat-number">{{ stats.vehicles }}</div><div class="stat-foot">Vehicles in the database</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Violations recorded</span><span class="stat-icon orange">⚑</span></div><div class="stat-number">{{ stats.violations }}</div><div class="stat-foot">Recorded traffic incidents</div></div>
+  <div class="stat-card"><div class="stat-top"><span>Total fines</span><span class="stat-icon green">₹</span></div><div class="stat-number">₹{{ "%.2f"|format(stats.total_fines) }}</div><div class="stat-foot">Value of recorded fines</div></div>
+</div>
+<div class="section-heading"><div><h2>Recent violation records</h2><p>Latest entries added to the system</p></div><a class="btn btn-primary" href="{{ url_for('violations') }}">+ Add violation</a></div>
+<div class="table-card"><div class="table-wrap"><table><thead><tr><th>Record ID</th><th>Vehicle</th><th>Violation</th><th>Date</th><th>Fine amount</th><th>Status</th></tr></thead><tbody>
+{% for row in recent %}<tr><td class="muted">#{{ row.record_id }}</td><td><strong>{{ row.registration_no }}</strong></td><td>{{ row.violation_type }}</td><td>{{ row.violation_date }}</td><td>₹{{ "%.2f"|format(row.fine_amount) }}</td><td><span class="status {{ row.status|lower }}">{{ row.status }}</span></td></tr>
+{% else %}<tr><td colspan="6" class="empty">No violation records yet. Add one from Violation Records.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

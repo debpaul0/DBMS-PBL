@@ -1,0 +1,4 @@
+{% extends "base.html" %}
+{% block title %}Database setup needed{% endblock %}
+{% block heading %}Database setup needed{% endblock %}
+{% block content %}<div class="form-card"><h2>Could not connect to MySQL</h2><p>Check that MySQL is running, then execute <code>database/schema.sql</code> and verify your database credentials.</p><pre>{{ error }}</pre></div>{% endblock %}
